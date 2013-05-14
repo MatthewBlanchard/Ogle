@@ -57,7 +57,7 @@ function Game:Game()
 	local vshader = Shader(gl.GL_VERTEX_SHADER, vertshader)
 	local fshader = Shader(gl.GL_FRAGMENT_SHADER, fragshader)
 
-	local program = Program(vshader, fshader)
+	program = Program(vshader, fshader)
 	program:bindAttribLocation(0, "position")
 	program:bindAttribLocation(1, "normal")
 	program:link()

@@ -35,7 +35,7 @@ function  Mesh:draw(program)
 	self.vao:bind()
 	program:use()
 
-	modelmat = program:uniform("model")
+	local modelmat = program:uniform("model")
 	modelmat:matrix4fv(self:matrix())
 
 	gl.glDrawElements(gl.GL_TRIANGLES, self.count * 3, gl.GL_UNSIGNED_INT, nil);
@@ -72,7 +72,7 @@ function Mesh.OBJ(file, color)
      			table.insert(vertf, v.z)
      		end
 		else
-			face = {v1, v2, v3}
+			local face = {v1, v2, v3}
 			for k, v in pairs(face) do
 				for v, vt, vn in string.gfind(v, "(%d*)%p(%d*)%p(%d*)") do
 					v, vt, vn = tonumber(v), tonumber(vt), tonumber(vn)
@@ -98,6 +98,5 @@ function Mesh.OBJ(file, color)
 		end
     end
 
-    print(vertf, faces, normalf)
     return Mesh:new(vertf, faces, normalf)
 end

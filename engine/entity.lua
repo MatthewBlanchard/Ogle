@@ -53,8 +53,7 @@ function Entity:draw()
 end
 
 function Entity:matrix()
-	rotation = self:rotation():matrix(self:position())
-	return rotation
+	return self:rotation():matrix(self:position())
 end
 
 function Entity:cameramatrix()
