@@ -54,16 +54,16 @@ function Game:Game()
 	sponza = Mesh.OBJ("sponza.obj")
 	sponza:position(0, -5, 0)
 
-	vshader = Shader(gl.GL_VERTEX_SHADER, vertshader)
-	fshader = Shader(gl.GL_FRAGMENT_SHADER, fragshader)
+	local vshader = Shader(gl.GL_VERTEX_SHADER, vertshader)
+	local fshader = Shader(gl.GL_FRAGMENT_SHADER, fragshader)
 
-	program = Program(vshader, fshader)
+	local program = Program(vshader, fshader)
 	program:bindAttribLocation(0, "position")
 	program:bindAttribLocation(1, "normal")
 	program:link()
 	program:use()
 
-	projUni = program:uniform("proj")
+	local projUni = program:uniform("proj")
 	projUni:matrix4fv(util.projectionmatrix(74, 640/480, 1, 10000))
 
 	viewUni = program:uniform("view")

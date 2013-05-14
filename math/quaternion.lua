@@ -11,7 +11,7 @@ end
 
 local sin, cos = math.sin, math.cos
 function Quaternion.fromAxisAngle(axis, angle)
-	angle = math.rad(angle)
+	local angle = math.rad(angle)
     local s = math.sin(angle/2)
 
     local x = s * axis.x
