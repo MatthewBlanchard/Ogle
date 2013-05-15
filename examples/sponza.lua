@@ -2,16 +2,6 @@ require "cameracontroller"
 
 Game = Object()
 
-local vertices = {
-	0.0,  0.5,
-    0.5, -0.5,
-    -0.5, -0.5
-}
-
-local elements = {
-	0, 1, 2
-}
-
 local vertshader = [[
 	#version 150
 

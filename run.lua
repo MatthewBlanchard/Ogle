@@ -15,7 +15,6 @@ do
 	gl.glEnable(gl.GL_CULL_FACE)
 	gl.glEnable(gl.GL_DEPTH_TEST)
 
-	print(arg[1])
 	require(arg[1])
 
 	local lt = 0
