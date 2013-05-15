@@ -38,5 +38,3 @@ function framework.mouse(x, y)
 		glfw.glfwSetCursorPos(window, x, y)
 	end	
 end
-
-require "run"

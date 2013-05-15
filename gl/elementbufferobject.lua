@@ -1,6 +1,7 @@
 ElementBufferObject = Object()
 
 function ElementBufferObject:ElementBufferObject()
+	print "Yer"
 	self.id = ffi.new("GLuint[1]")
 	gl.glGenBuffers(1, self.id)
 	self.id = self.id[0]
@@ -11,11 +12,10 @@ function ElementBufferObject:bind()
 end
 
 function ElementBufferObject:data(data)
-	local tempv = ffi.new("GLuint[" .. #data .. "]", data)
-	
-	for i = 1, #data do
-		tempv[i-1] = data[i]
+	if type(data) == "table" then
+		data = ffi.new("GLuint[" .. #data .. "]", data)
 	end
 
-	gl.glBufferData(gl.GL_ELEMENT_ARRAY_BUFFER, ffi.sizeof(tempv), tempv, gl.GL_STATIC_DRAW)
+	print(data)
+	gl.glBufferData(gl.GL_ELEMENT_ARRAY_BUFFER, ffi.sizeof(data), data, gl.GL_STATIC_DRAW)
 end

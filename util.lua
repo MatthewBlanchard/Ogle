@@ -60,3 +60,9 @@ function util.loadfile(file)
     f:close()
     return str
 end
+
+function util.writefile(file, str)
+	local f = io.open(file, "wb")
+    f:write(str)
+    f:close()
+end

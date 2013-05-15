@@ -11,7 +11,9 @@ function VertexBufferObject:bind()
 end
 
 function VertexBufferObject:data(data)
-	local tempv = ffi.new("float[" .. #data .. "]", data)
+	if type(data) == "table" then
+		data = ffi.new("float[" .. #data .. "]", data)
+	end
 
-	gl.glBufferData(gl.GL_ARRAY_BUFFER, ffi.sizeof(tempv), tempv, gl.GL_STATIC_DRAW)
+	gl.glBufferData(gl.GL_ARRAY_BUFFER, ffi.sizeof(data), data, gl.GL_STATIC_DRAW)
 end

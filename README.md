@@ -3,6 +3,6 @@ Ogle
 
 A modern OpenGL framework for Lua
 
-To run open a terminal and type:
+To run the supplied example use:
 
-luajit framework.lua
+"luajit run.lua examples/sponza"

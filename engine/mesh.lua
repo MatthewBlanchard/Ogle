@@ -1,34 +1,25 @@
 Mesh = Entity()
 
-function Mesh:Mesh(verts, faces, normals)
+function Mesh:Mesh(vertdata, indices)
 	self.vao = VertexArrayObject()
 	self.vao:bind()
 
-	if normals then
-		normoff = #verts
-		for k,v in pairs(normals) do
-			table.insert(verts, v)
-		end
-	end
-
 	self.vbo = VertexBufferObject()
 	self.vbo:bind()
-	self.vbo:data(verts)
+	self.vbo:data(vertdata)
 
 	self.ebo = ElementBufferObject()
 	self.ebo:bind()
-	self.ebo:data(faces)
+	self.ebo:data(indices)
 
 	-- Set pointer for position parameter.`
 	Attribute(0):enable()
 	Attribute(0):pointer(3, 0, nil)
 
-	if normals then
-		Attribute(1):enable()
-		Attribute(1):pointer(3, 0, normoff)
-	end
+	Attribute(1):enable()
+	Attribute(1):pointer(3, 0, ffi.sizeof(vertdata)/4/2)
 
-	self.count = #verts
+	self.count = ffi.sizeof(vertdata)/2
 end
 
 function  Mesh:draw(program)
@@ -41,8 +32,48 @@ function  Mesh:draw(program)
 	gl.glDrawElements(gl.GL_TRIANGLES, self.count * 3, gl.GL_UNSIGNED_INT, nil);
 end
 
-function Mesh.OBJ(file, color)
-	local verts, faces, normals = {}, {}, {}
+function Mesh.preprocessOBJ(file)
+	local verts, faces = Mesh.parseOBJ(file)
+
+	verts = ffi.string(verts, ffi.sizeof(verts))
+	faces = ffi.string(faces, ffi.sizeof(faces))
+
+	local header = ffi.new("int[2]")
+	header[0] = string.len(verts)
+	header[1] = string.len(faces)
+	header = ffi.string(header, ffi.sizeof(header))
+
+
+
+	util.writefile("processed.pobj", header .. verts .. faces)
+end
+
+function Mesh.preprocessedOBJ(file)
+	local str = util.loadfile(file)
+
+	local header = ffi.new("int[2]")
+	ffi.copy(header, str, 8)
+
+	local verts = ffi.new("float[?]", header[0]/4)
+	ffi.copy(verts, string.sub(str, 9, header[0]))
+	print(ffi.sizeof(verts), string.len(string.sub(str, 9, header[0])))
+
+	local faces = ffi.new("unsigned int[?]", header[1])
+	ffi.copy(faces, string.sub(str, header[0]+9), header[1])
+	--print(string.len(string.sub(str, header[0]+9)), header[1])
+
+
+	return Mesh:new(verts, faces)
+end
+
+function Mesh.OBJ(file)
+	local verts, faces, normals = Mesh.parseOBJ(file)
+	Mesh.preprocessOBJ(file)
+    return Mesh:new(verts, faces, normals)
+end
+
+function Mesh.parseOBJ(file)
+		local verts, faces, normals = {}, {}, {}
 	local vertnt, vertf, normalf = {}, {}, {}
 	local fc = 0
 
@@ -98,5 +129,12 @@ function Mesh.OBJ(file, color)
 		end
     end
 
-    return Mesh:new(vertf, faces, normalf)
+    for k, v in pairs(normalf) do
+    	table.insert(vertf, v)
+    end
+
+    local vertf = ffi.new("float[" .. #vertf .. "]", vertf)
+    local facesf = ffi.new("unsigned int[" .. #faces .. "]", faces)
+
+    return vertf, facesf, normalf
 end

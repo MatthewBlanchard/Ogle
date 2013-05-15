@@ -1,4 +1,5 @@
--- Main loop, imitating LOVE's in some ways.
+require "framework"
+
 do
 	assert(glfw.glfwInit() == 1)
 
@@ -11,10 +12,11 @@ do
 	glfw.glfwMakeContextCurrent(window)
 	glfw.glfwSwapInterval(0)
 
-
+	gl.glEnable(gl.GL_CULL_FACE)
 	gl.glEnable(gl.GL_DEPTH_TEST)
 
-	require "main"
+	print(arg[1])
+	require(arg[1])
 
 	local lt = 0
 	while glfw.glfwWindowShouldClose(window) ~= 1 do
