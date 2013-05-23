@@ -13,7 +13,7 @@ end
 
 function ElementBufferObject:data(data)
 	if type(data) == "table" then
-		data = ffi.new("GLuint[" .. #data .. "]", data)
+		local data = ffi.new("GLuint[" .. #data .. "]", data)
 	end
 
 	print(data)

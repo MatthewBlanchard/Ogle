@@ -3,6 +3,7 @@ glfw = require "glfw"
 gl = require "opengl"
 
 require "object"
+print "???"
 require "util"
 
 require "math/vector"
@@ -29,11 +30,11 @@ function framework.key(glfwkeycode)
 	return glfw.glfwGetKey(window, glfwkeycode) == 1
 end
 
+local mx, my = ffi.new("double[1]"), ffi.new("double[1]")
 function framework.mouse(x, y)
 	if not y then
-		local x, y = ffi.new("int[1]"), ffi.new("int[1]")
-		glfw.glfwGetCursorPos(window, x, y)
-		return x[0], y[0]
+		glfw.glfwGetCursorPos(window, mx, my)
+		return mx[0], my[0]
 	else
 		glfw.glfwSetCursorPos(window, x, y)
 	end	

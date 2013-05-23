@@ -1,17 +1,11 @@
 local ffi  = require( "ffi" )
 
-local libs = ffi_glfw_libs or {
-   OSX     = { x86 = "glfw.dylib",       x64 = "glfw.dylib" },
-   Windows = { x86 = "bin/Windows/x86/glfw.dll", x64 = "bin/Windows/x64/glfw.dll" },
-   Linux   = { x86 = "bin/Linux/x86/libglfw.so", x64 = "bin/Linux/x64/libglfw.so",
-	       arm = "bin/Linux/arm/libglfw.so"  },
-   BSD     = { x86 = "bin/glfw32.so", x64 = "bin/glfw64.so" },
-   POSIX   = { x86 = "bin/glfw32.so", x64 = "bin/glfw64.so" },
-   Other   = { x86 = "bin/glfw32.so", x64 = "bin/glfw64.so" },
+local libs = {
+   OSX     = "glfw.dylib",
+   Windows = "bin/Win/glfw.dll",
 }
-
-local lib  = ffi_glfw_lib or libs[ ffi.os ][ ffi.arch ]
-local glfw = ffi.load( lib )
+ 
+local glfw = ffi.load( libs[jit.os] )
 
 ffi.cdef[[
 enum 
@@ -240,7 +234,7 @@ enum
   GLFW_GAMMA_RAMP_SIZE      = 256,
   GLFW_CONNECTED            = 0x00061000,
   GLFW_DISCONNECTED         = 0x00061001
-}
+};
 
 typedef void (*GLFWglproc)(void);
 typedef struct GLFWmonitor GLFWmonitor;
@@ -323,7 +317,7 @@ typedef struct
  void glfwSetInputMode(GLFWwindow* window, int mode, int value);
  int glfwGetKey(GLFWwindow* window, int key);
  int glfwGetMouseButton(GLFWwindow* window, int button);
- void glfwGetCursorPos(GLFWwindow* window, int* xpos, int* ypos);
+ void glfwGetCursorPos(GLFWwindow* window, double* xpos, double* ypos);
  void glfwSetCursorPos(GLFWwindow* window, int xpos, int ypos);
  void glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun cbfun);
  void glfwSetCharCallback(GLFWwindow* window, GLFWcharfun cbfun);

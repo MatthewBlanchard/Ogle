@@ -40,8 +40,8 @@ function Game:Game()
 	camera = Entity()
 	camera:position(0, 0, 0)
 	camcontroller = CameraController(camera)
-
-	sponza = Mesh.preprocessedOBJ("processed.pobj")
+	
+	sponza = Mesh.OBJ("sponza.obj")
 	sponza:position(0, -5, 0)
 
 	local vshader = Shader(gl.GL_VERTEX_SHADER, vertshader)

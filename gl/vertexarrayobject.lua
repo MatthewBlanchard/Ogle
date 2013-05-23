@@ -1,7 +1,9 @@
 VertexArrayObject = Object()
 
 function VertexArrayObject:VertexArrayObject()
+	print "EH"
 	self.id = ffi.new("GLuint[1]")
+	print(gl.glGenVertexArrays)
 	gl.glGenVertexArrays(1, self.id)
 	self.id = self.id[0]
 end

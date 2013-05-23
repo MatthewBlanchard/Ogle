@@ -38,12 +38,13 @@ end
 
 -- Methods
 function Object:parent()
-    return getmetatable(self)
+    return getmetatable(self).__index
 end
 
 function Object:new(...)
     local o = {}
     setmetatable(o, self)
+	
     self.__index = self
     self.__call = Object.__call
     self.__newindex = Object.__newindex

@@ -57,6 +57,7 @@ end
 function util.loadfile(file)
 	local f = io.open(file, "r")
     local str = f:read("*all")
+	print(string.len(str))
     f:close()
     return str
 end
@@ -65,4 +66,17 @@ function util.writefile(file, str)
 	local f = io.open(file, "wb")
     f:write(str)
     f:close()
+end
+
+oldnew = ffi.new
+function ffi.new(o, t, th)
+	print(o, t, th)
+	
+	if not t then
+		return oldnew(o)
+	elseif not th then
+		return oldnew(o, t)
+	else
+		return oldnew(o, t, th)
+	end
 end
