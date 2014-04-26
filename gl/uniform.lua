@@ -9,9 +9,9 @@ function Uniform:matrix4fv(matrix)
 	for k,v in pairs(matrix) do
 		matbuffer[k-1] = v
 	end
-	gl.glUniformMatrix4fv( self.id, 1, gl.GL_FALSE, matbuffer )
+	gl.UniformMatrix4fv( self.id, 1, gl.GL_FALSE, matbuffer )
 end
 
 function Uniform:enable()
-	gl.glEnableVertexAttribArray(self.id)
+	gl.EnableVertexAttribArray(self.id)
 end

@@ -1,23 +1,24 @@
 Program = Object()
 
 function Program:Program(vert, frag)
+	self.id = gl.CreateProgram()
+
 	if frag then
-		self.id = gl.glCreateProgram()
 		self:attach(vert)
 		self:attach(frag)
 	end
 end
 
 function Program:attach(shader)
-	gl.glAttachShader(self.id, shader.id)
+	gl.AttachShader(self.id, shader.id)
 end
 
 function Program:link()
-	gl.glLinkProgram(self.id)
+	gl.LinkProgram(self.id)
 end
 
 function Program:use()
-	gl.glUseProgram(self.id)
+	gl.UseProgram(self.id)
 end
 
 function Program:attribute(name)
@@ -25,17 +26,17 @@ function Program:attribute(name)
 		return Attribute(name)
 	end
 
-	return Attribute(gl.glGetAttribLocation(self.id, name))
+	return Attribute(gl.GetAttribLocation(self.id, name))
 end
 
 function Program:uniform(name)
-	return Uniform:new(gl.glGetUniformLocation(self.id, name))
+	return Uniform:new(gl.GetUniformLocation(self.id, name))
 end
 
 function Program:bindAttribLocation(index, name)
-	gl.glBindAttribLocation(self.id, index, name)
+	gl.BindAttribLocation(self.id, index, name)
 end
 
 function Program:bindFragDataLocation(num, name)
-	gl.glBindFragDataLocation(self.id, num, name)
+	gl.BindFragDataLocation(self.id, num, name)
 end

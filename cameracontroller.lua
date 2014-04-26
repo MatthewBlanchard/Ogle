@@ -10,13 +10,13 @@ local lx, ly
 local hw, hh =  640/2, 480/2
 function CameraController:update(dt)
 	if framework.key(glfw.GLFW_KEY_W) then  
-		self.controlled:moveForward(0, 0, 200*dt)
+		self.controlled:moveRelative(Vector.forward, 5 * dt)
 	elseif framework.key(glfw.GLFW_KEY_S) then
-		self.controlled:moveForward(0, 0, -200*dt)
+		self.controlled:moveRelative(Vector.forward, -5 * dt)
 	elseif framework.key(glfw.GLFW_KEY_A) then
-		self.controlled:moveForward(200*dt, 0, 0)
+		self.controlled:moveRelative(Vector.side, -5*dt)
 	elseif framework.key(glfw.GLFW_KEY_D) then
-		self.controlled:moveForward(-200*dt, 0, 0)
+		self.controlled:moveRelative(Vector.side, 5*dt)
 	end
 
 	local mx, my = framework.mouse()
@@ -32,7 +32,7 @@ function CameraController:update(dt)
 	local dx, dy = lx - mx, ly - my
 	lx, ly = mx, my
 	
-	self.pitch = self.pitch - dy
-	self.yaw = self.yaw - dx
+	self.pitch = self.pitch + dy
+	self.yaw = self.yaw + dx
 	self.controlled.rot = Quaternion.axisAngle(Vector.side, self.pitch)*Quaternion.axisAngle(Vector.up, self.yaw)
 end

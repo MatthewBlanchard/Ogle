@@ -33,7 +33,7 @@ function Vector:normal()
 	return Vector:new(self.x/mag, self.y/mag, self.z/mag), mag
 end
 
-function Vector:inlinenormal()
+function Vector:normalize()
 	local mag = sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
 	return self.x/mag, self.y/mag, self.z/mag, mag
 end

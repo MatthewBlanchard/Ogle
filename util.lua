@@ -2,7 +2,7 @@ util = {}
 
 -- based off some code I found on the internet
 function util.projectionmatrix(fov, aspect, znear, zfar)
-	ymax = znear * math.tan(fov * math.pi/360)
+	--[[ymax = znear * math.tan(fov * math.pi/360)
 	xmax = ymax * aspect
 
 	width = xmax * 2
@@ -20,6 +20,16 @@ function util.projectionmatrix(fov, aspect, znear, zfar)
  		0, h, 0, 0,
  		0, 0, q, -1,
  		0, 0, qn, 0
+ 	}]]
+
+ 	ys = 1/math.tan(fov/2)
+ 	xs = ys / aspect
+
+ 	return {
+ 		xs, 0, 0, 0,
+ 		0, ys, 0, 0,
+ 		0, 0, zfar/(znear-zfar), -1,
+ 		0, 0, znear*zfar/(znear-zfar), 0
  	}
 end
 

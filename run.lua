@@ -1,6 +1,5 @@
 require "framework"
 
-print "YA"
 do
 	assert(glfw.glfwInit() == 1)
 
@@ -9,16 +8,14 @@ do
 	glfw.glfwWindowHint(glfw.GLFW_OPENGL_FORWARD_COMPAT, gl.GL_TRUE)
 	glfw.glfwWindowHint(glfw.GLFW_OPENGL_PROFILE, glfw.GLFW_OPENGL_CORE_PROFILE)
 
-	window = assert(glfw.glfwCreateWindow(640, 480, "MattRB", nil, nil))
+	window = assert(glfw.glfwCreateWindow(800, 600, "MattRB", nil, nil))
 	glfw.glfwMakeContextCurrent(window)
 	glfw.glfwSwapInterval(0)
 	
 	glfw.glfwSetInputMode(window, glfw.GLFW_CURSOR_MODE, glfw.GLFW_CURSOR_CAPTURED)
-	
-	gl = OGL()
 
-	gl.glEnable(gl.GL_CULL_FACE)
-	gl.glEnable(gl.GL_DEPTH_TEST)
+	gl.Enable(gl.GL_CULL_FACE)
+	gl.Enable(gl.GL_DEPTH_TEST)
 	
 	require(arg[1])
 
@@ -33,10 +30,10 @@ do
     	lt = nt
 
     	state:update(dt)
-		print(1/dt)
-		collectgarbage("collect")
+		--print(1/dt)
+		--collectgarbage("collect")
 
-    	gl.glClear(bit.bor(gl.GL_COLOR_BUFFER_BIT, gl.GL_DEPTH_BUFFER_BIT))
+    	gl.Clear(bit.bor(gl.GL_COLOR_BUFFER_BIT, gl.GL_DEPTH_BUFFER_BIT))
     	state:draw()
 		glfw.glfwSwapBuffers(window)
 		glfw.glfwPollEvents()

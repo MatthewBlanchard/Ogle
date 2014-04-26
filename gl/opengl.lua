@@ -2626,22 +2626,15 @@ void* wglGetProcAddress(const char* lpszProc);
 gl = {}
 gl._gl = ffi.load("OpenGL32.dll")
 
-local function safeglcheck(key)
-	a = gl._gl[key]
-end
-
 function gl:__index(key)
 	local fkey = "gl" .. key
 
 	local ptr = self._gl.wglGetProcAddress(fkey)
 	if ptr == nil then
 		-- we didn't find the procedure, so now we check for a define.
-		if pcall(safeglcheck, key) then
+		if self._gl[key] then
 			rawset(self, key, self._gl[key])
 			return self._gl[key]
-		elseif pcall(safeglcheck, fkey) then
-			rawset(self, key, self._gl[key])
-			return self._gl[fkey]
 		end
 
 		return nil

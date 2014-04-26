@@ -1,14 +1,14 @@
 Mesh = Entity()
 
 function Mesh:Mesh(vertdata, indices)
-	self.vao = VertexArrayObject()
+	self.vao = VertexArray()
 	self.vao:bind()
 
-	self.vbo = VertexBufferObject()
+	self.vbo = VertexBuffer()
 	self.vbo:bind()
 	self.vbo:data(vertdata)
 
-	self.ebo = ElementBufferObject()
+	self.ebo = ElementBuffer()
 	self.ebo:bind()
 	self.ebo:data(indices)
 
@@ -29,7 +29,7 @@ function  Mesh:draw(program)
 	local modelmat = program:uniform("model")
 	modelmat:matrix4fv(self:matrix())
 
-	gl.glDrawElements(gl.GL_TRIANGLES, self.count * 3, gl.GL_UNSIGNED_INT, nil);
+	gl.DrawElements(gl.GL_TRIANGLES, self.count * 3, gl.GL_UNSIGNED_INT, nil);
 end
 
 function Mesh.preprocessOBJ(file)
@@ -90,7 +90,7 @@ function Mesh.parseOBJ(file)
 	 	table.insert(normals, tonumber(z))
     end
 
-    -- Find faces
+    -- Find faces`
 	for v1, v2, v3 in string.gfind(str, "f%s+(%A-)%s+(%A-)%s+(%A-)%s+") do
 		local face = {v1, v2, v3}
 		for k, v in pairs(face) do

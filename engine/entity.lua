@@ -39,14 +39,8 @@ function Entity:rotation(quat)
 	self.rot:normalize()
 end
 
-function Entity:moveForward(x, y, z)
-	local vec
-	if type(x) == "table" then
-		vec = x
-	else
-		vec = Vector:new(x, y, z)
-	end
-	self.pos = self.pos + self.rot:conjugate():rotate(vec)
+function Entity:moveRelative(vector, scalar)
+	self.pos = self.pos + self.rot:conjugate():rotate(vector) * scalar
 end
 
 function Entity:draw()
